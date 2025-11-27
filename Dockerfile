@@ -1,6 +1,6 @@
 FROM alpine:3.22
 
-RUN apk --update add bash jq curl redis
+RUN apk --update add bash jq curl redis mariadb-client
 
 # Install redis-shake
 ARG REDIS_SHAKE_VERSION=4.2.2
@@ -10,6 +10,9 @@ RUN curl -fsSL https://github.com/tair-opensource/RedisShake/releases/download/v
     chmod +x /usr/local/bin/redis-shake
 
 ADD redis/migrate.sh /redis/migrate.sh
-RUN chmod +x /redis/migrate.sh
+ADD mariadb/migrate.sh /mariadb/migrate.sh
 
-ENTRYPOINT [ "/redis/migrate.sh" ]
+RUN chmod +x /redis/migrate.sh
+RUN chmod +x /mariadb/migrate.sh
+
+ENTRYPOINT [ "/bin/sleep", "infinity" ]

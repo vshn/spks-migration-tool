@@ -18,10 +18,9 @@ applications:
     services:
       - <mariadb-source>
       - <mariadb-destination>
-    routes:
-      - route: migrate.scapp-corp.swisscom.com
+    no-route: true
     docker:
-      image: ghcr-docker-remote.artifactory.swisscom.com/vshn/spks-migration-tool-mariadb:latest
+      image: ghcr-docker-remote.artifactory.swisscom.com/vshn/spks-migration-tool:latest
     command: |
       sleep infinity
     health-check-type: process
@@ -49,8 +48,9 @@ applications:
     services:
       - <redis-source>
       - <redis-destination>
+    no-route: true
     docker:
-      image: ghcr-docker-remote.artifactory.swisscom.com/vshn/spks-migration-tool-redis:latest
+      image: ghcr-docker-remote.artifactory.swisscom.com/vshn/spks-migration-tool:latest
     command: |
       sleep infinity
     health-check-type: process

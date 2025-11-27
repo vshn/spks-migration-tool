@@ -3,8 +3,8 @@
 set -e -o pipefail
 
 # Parse source and destination from VCAP_SERVICES
-source=$(echo $VCAP_SERVICES | jq -r '."redis-k8s"[] | select(.credentials.host | (contains("10.250") or contains("10.144") ))')
-dest=$(echo $VCAP_SERVICES | jq -r '."redis-k8s"[] | select(.credentials.host | contains("10.197"))')
+source=$(echo $VCAP_SERVICES | jq -r '."redis-k8s"[]')
+dest=$(echo $VCAP_SERVICES | jq -r '."redis"[]? // ."redis-premium"[]?')
 
 # Source Redis configuration
 SRC_HOST=$(echo $source | jq -r '.credentials.host')

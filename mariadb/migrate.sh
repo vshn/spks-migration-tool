@@ -2,9 +2,9 @@
 
 set -e -o pipefail
 
-# Needs to be verified that the ranges are correct...
-source=$(echo $VCAP_SERVICES | jq -r '."mariadb-k8s-database"[] | select(.credentials.host | (contains("10.250") or contains("10.144") ))')
-dest=$(echo $VCAP_SERVICES | jq -r '."mariadb-k8s-database"[] | select(.credentials.host | contains("10.197"))')
+# Parse source and destination from VCAP_SERVICES
+source=$(echo $VCAP_SERVICES | jq -r '."mariadb-k8s-database"[]')
+dest=$(echo $VCAP_SERVICES | jq -r '."mariadb-database"[]? // ."mariadb-database-premium"[]?')
 
 # Source
 SRC_HOST=$(echo $source | jq -r '.credentials.host')
